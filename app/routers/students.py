@@ -41,7 +41,7 @@ async def get_my_features(authorization: Optional[str] = Header(None)):
         )
 
         if not result.data or len(result.data) == 0:
-            raise HTTPException(status_code=404, detail="Student features not found. Submit your features first.")
+            return None
 
         return result.data[0]
 

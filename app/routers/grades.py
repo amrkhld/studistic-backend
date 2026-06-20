@@ -15,11 +15,14 @@ def _get_user_id(authorization: Optional[str]) -> str:
     if not authorization or not authorization.startswith("Bearer "):
         raise HTTPException(status_code=401, detail="Missing or invalid token")
     token = authorization.split(" ")[1]
-    supabase = get_supabase_client()
-    user = supabase.auth.get_user(token)
-    if not user or not user.user:
-        raise HTTPException(status_code=401, detail="Invalid token")
-    return user.user.id
+    try:
+        supabase = get_supabase_client()
+        user = supabase.auth.get_user(token)
+        if not user or not user.user:
+            raise HTTPException(status_code=401, detail="Invalid or expired token")
+        return user.user.id
+    except Exception as e:
+        raise HTTPException(status_code=401, detail=f"Invalid or expired token: {str(e)}")
 
 
 @router.get("/")

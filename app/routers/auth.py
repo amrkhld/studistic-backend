@@ -146,10 +146,12 @@ async def update_profile(
 
     try:
         supabase = get_supabase_client()
-        user = supabase.auth.get_user(token)
-
-        if not user or not user.user:
-            raise HTTPException(status_code=401, detail="Invalid token")
+        try:
+            user = supabase.auth.get_user(token)
+            if not user or not user.user:
+                raise HTTPException(status_code=401, detail="Invalid or expired token")
+        except Exception as e:
+            raise HTTPException(status_code=401, detail=f"Invalid or expired token: {str(e)}")
 
         # Build update dict from non-None fields
         updates = {k: v for k, v in request.model_dump().items() if v is not None}
@@ -190,10 +192,12 @@ async def upload_avatar(
 
     try:
         supabase = get_supabase_client()
-        user = supabase.auth.get_user(token)
-
-        if not user or not user.user:
-            raise HTTPException(status_code=401, detail="Invalid token")
+        try:
+            user = supabase.auth.get_user(token)
+            if not user or not user.user:
+                raise HTTPException(status_code=401, detail="Invalid or expired token")
+        except Exception as e:
+            raise HTTPException(status_code=401, detail=f"Invalid or expired token: {str(e)}")
             
         user_id = user.user.id
         

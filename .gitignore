@@ -13,9 +13,6 @@ python/
 # Environment variables
 .env
 
-# ML model artifacts (regenerated from train_and_export.py)
-ml/*.pkl
-
 # IDE
 .vscode/
 .idea/

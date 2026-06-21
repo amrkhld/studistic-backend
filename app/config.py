@@ -13,6 +13,9 @@ class Settings(BaseSettings):
     supabase_service_role_key: str = "your-service-role-key"
     jwt_secret: str = "your-jwt-secret"
 
+    # Gemini
+    gemini_api_key: str = ""
+
     # CORS
     cors_origins: str = "http://localhost:3000"
 

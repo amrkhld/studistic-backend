@@ -10,7 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
 from app.config import get_settings
-from app.routers import auth, predictions, students, grades, tasks, stats
+from app.routers import auth, predictions, students, grades, tasks, stats, gemini
 
 
 # ── Lifespan: preload ML model on startup ────────────────────────────────────
@@ -66,6 +66,7 @@ app.include_router(students.router)
 app.include_router(grades.router)
 app.include_router(tasks.router)
 app.include_router(stats.router)
+app.include_router(gemini.router)
 
 
 # ── Root health check ───────────────────────────────────────────────────────
